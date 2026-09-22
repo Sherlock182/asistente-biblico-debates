@@ -21,7 +21,6 @@ import { AudioModule, RecordingPresets, setAudioModeAsync, useAudioRecorder } fr
 
 import AboutModal from './src/components/AboutModal';
 import BibleReaderModal from './src/components/BibleReaderModal';
-import BrandSplash from './src/components/BrandSplash';
 import ChatBubble from './src/components/ChatBubble';
 import EditClaimModal from './src/components/EditClaimModal';
 import EmptyState from './src/components/EmptyState';
@@ -708,11 +707,12 @@ function AppContent() {
 }
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  // The branded opening screen is the native one declared in app.json (expo-splash-screen).
+  // A second splash drawn in JS used to be needed for Expo Go, but in an installed build it
+  // just overlaps the native one and flashes over the interface.
   return (
     <SafeAreaProvider>
       <AppContent />
-      {showSplash ? <BrandSplash onFinish={() => setShowSplash(false)} /> : null}
     </SafeAreaProvider>
   );
 }
