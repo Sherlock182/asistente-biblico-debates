@@ -1,0 +1,85 @@
+import { useEffect, useRef } from 'react';
+import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
+
+import { colors, radius, spacing, type } from '../theme';
+
+const BAR_COUNT = 5;
+const BAR_DELAYS = [0, 120, 240, 90, 180];
+
+function Bar({ delay }) {
+  const scale = useRef(new Animated.Value(0.35)).current;
+
+  useEffect(() => {
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.delay(delay),
+        Animated.timing(scale, {
+          toValue: 1,
+          duration: 380,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(scale, {
+          toValue: 0.35,
+          duration: 380,
+          easing: Easing.in(Easing.quad),
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [delay]);
+
+  return <Animated.View style={[styles.bar, { transform: [{ scaleY: scale }] }]} />;
+}
+
+/** Live "recording" strip shown above the composer while the debate is being captured. */
+export default function ListeningIndicator({ windowSeconds, analysisMode }) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.bars}>
+        {Array.from({ length: BAR_COUNT }).map((_, i) => (
+          <Bar key={i} delay={BAR_DELAYS[i]} />
+        ))}
+      </View>
+      <Text style={styles.text}>
+        {analysisMode === 'onStop'
+          ? 'Transcribiendo · analiza al detener'
+          : `Escuchando · analiza cada ~${windowSeconds}s`}
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    gap: spacing.sm,
+    paddingVertical: 7,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.sm,
+    borderRadius: radius.pill,
+    backgroundColor: colors.dangerSoft,
+    borderWidth: 1,
+    borderColor: colors.dangerBorder,
+  },
+  bars: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    height: 16,
+  },
+  bar: {
+    width: 3,
+    height: 16,
+    borderRadius: 2,
+    backgroundColor: colors.danger,
+  },
+  text: {
+    ...type.caption,
+    color: colors.opponentText,
+  },
+});
