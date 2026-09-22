@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Linking, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, radius, shadow, spacing, type } from '../theme';
@@ -56,6 +56,12 @@ export default function SettingsModal({
             </Pressable>
           </View>
 
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator
+            keyboardShouldPersistTaps="handled"
+          >
           <View style={styles.statusCard}>
             <View style={[styles.statusDot, { backgroundColor: connected ? colors.success : colors.warning }]} />
             <Text style={styles.statusText}>
@@ -185,6 +191,8 @@ export default function SettingsModal({
             </View>
           </Pressable>
 
+          </ScrollView>
+
           <Pressable
             style={styles.saveButton}
             onPress={() => {
@@ -215,9 +223,19 @@ const styles = StyleSheet.create({
     borderTopRightRadius: radius.xl,
     borderTopWidth: 1,
     borderColor: colors.border,
-    padding: spacing.xl,
-    paddingBottom: 40,
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.xl,
+    paddingBottom: 32,
+    // Without this the sheet grows past the screen and, being anchored to the bottom,
+    // hides its own top — which is where the API key field lives.
+    maxHeight: '88%',
     ...shadow.floating,
+  },
+  scroll: {
+    flexGrow: 0,
+  },
+  scrollContent: {
+    paddingBottom: spacing.sm,
   },
   handle: {
     width: 38,
