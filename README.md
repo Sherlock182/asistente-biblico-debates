@@ -6,7 +6,7 @@
 
 **Verifica en tiempo real, contra la Reina-Valera 1960, lo que se afirma en un debate.**
 
-[![Descargar APK](https://img.shields.io/badge/Descargar-APK%20v1.1.0-D9B65C?style=for-the-badge&logo=android&logoColor=black)](../../releases/latest)
+[![Descargar APK](https://img.shields.io/github/v/release/Sherlock182/asistente-biblico-debates?style=for-the-badge&label=Descargar%20APK&color=D9B65C&logo=android&logoColor=black)](../../releases/latest)
 [![Expo SDK 57](https://img.shields.io/badge/Expo%20SDK-57-000020?style=for-the-badge&logo=expo)](https://expo.dev)
 [![React Native](https://img.shields.io/badge/React%20Native-0.86-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactnative.dev)
 [![Licencia MIT](https://img.shields.io/badge/Licencia-MIT-2BB673?style=for-the-badge)](LICENSE)
