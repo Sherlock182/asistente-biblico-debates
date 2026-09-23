@@ -27,12 +27,20 @@ Por cada afirmación entrega un veredicto —**FALSO**, **VERDADERO**, **PARCIAL
 
 ## Capturas
 
+<div align="center">
+
+<img src="assets/screenshots/01-veredicto.jpg" alt="Veredicto con los versículos que lo respaldan" width="270" />
+
+**Así se ve un veredicto.** La afirmación que se escuchó, el fallo contra la Reina-Valera 1960, los versículos que lo sostienen —con su texto íntegro, verificado contra la copia local— y los botones para preparar la réplica.
+
+</div>
+
 <table>
   <tr>
-    <td align="center" width="25%"><img src="assets/screenshots/01-inicio.jpg" alt="Pantalla principal" width="200" /></td>
-    <td align="center" width="25%"><img src="assets/screenshots/02-ajustes.jpg" alt="Ajustes" width="200" /></td>
-    <td align="center" width="25%"><img src="assets/screenshots/03-debates.jpg" alt="Debates guardados" width="200" /></td>
-    <td align="center" width="25%"><img src="assets/screenshots/04-lector.jpg" alt="Lector bíblico" width="200" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/02-inicio.jpg" alt="Pantalla principal" width="190" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/03-ajustes.jpg" alt="Ajustes" width="190" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/04-debates.jpg" alt="Debates guardados" width="190" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/05-lector.jpg" alt="Lector bíblico" width="190" /></td>
   </tr>
   <tr>
     <td align="center"><strong>Inicio</strong><br/>Micrófono o afirmación escrita, con los 31 099 versículos ya indexados sin conexión.</td>
