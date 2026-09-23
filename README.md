@@ -25,6 +25,25 @@ Por cada afirmación entrega un veredicto —**FALSO**, **VERDADERO**, **PARCIAL
 
 ---
 
+## Capturas
+
+<table>
+  <tr>
+    <td align="center" width="25%"><img src="assets/screenshots/01-inicio.jpg" alt="Pantalla principal" width="200" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/02-ajustes.jpg" alt="Ajustes" width="200" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/03-debates.jpg" alt="Debates guardados" width="200" /></td>
+    <td align="center" width="25%"><img src="assets/screenshots/04-lector.jpg" alt="Lector bíblico" width="200" /></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Inicio</strong><br/>Micrófono o afirmación escrita, con los 31 099 versículos ya indexados sin conexión.</td>
+    <td align="center"><strong>Ajustes</strong><br/>Clave de Groq, modo de análisis y ventana de escucha de 15 a 90 s.</td>
+    <td align="center"><strong>Debates</strong><br/>Cada sesión queda guardada en el dispositivo con sus afirmaciones.</td>
+    <td align="center"><strong>Lector</strong><br/>Los 66 libros de la Reina-Valera 1960, navegables por capítulo.</td>
+  </tr>
+</table>
+
+---
+
 ## Funcionalidades
 
 ### Escucha y análisis
