@@ -130,7 +130,6 @@ src/
 ├── components/
 │   ├── AboutModal.js       Créditos y contacto
 │   ├── BibleReaderModal.js Lector de los 66 libros
-│   ├── BrandSplash.js      Presentación de apertura
 │   ├── ChatBubble.js       Veredictos, citas y acciones
 │   ├── EditClaimModal.js   Corrección de transcripciones
 │   ├── EmptyState.js       Pantalla inicial
