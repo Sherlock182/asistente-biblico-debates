@@ -35,24 +35,44 @@ function Bar({ delay }) {
 }
 
 /** Live "recording" strip shown above the composer while the debate is being captured. */
-export default function ListeningIndicator({ windowSeconds, analysisMode }) {
+export default function ListeningIndicator({ windowSeconds, analysisMode, lastHeard }) {
   return (
-    <View style={styles.container}>
-      <View style={styles.bars}>
-        {Array.from({ length: BAR_COUNT }).map((_, i) => (
-          <Bar key={i} delay={BAR_DELAYS[i]} />
-        ))}
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <View style={styles.bars}>
+          {Array.from({ length: BAR_COUNT }).map((_, i) => (
+            <Bar key={i} delay={BAR_DELAYS[i]} />
+          ))}
+        </View>
+        <Text style={styles.text}>
+          {analysisMode === 'onStop'
+            ? 'Transcribiendo · analiza al detener'
+            : `Escuchando · analiza cada ~${windowSeconds}s`}
+        </Text>
       </View>
-      <Text style={styles.text}>
-        {analysisMode === 'onStop'
-          ? 'Transcribiendo · analiza al detener'
-          : `Escuchando · analiza cada ~${windowSeconds}s`}
-      </Text>
+
+      {lastHeard ? (
+        <Text style={styles.heard} numberOfLines={2}>
+          “{lastHeard}”
+        </Text>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    alignItems: 'center',
+    paddingHorizontal: spacing.xl,
+    marginBottom: spacing.sm,
+  },
+  heard: {
+    ...type.caption,
+    color: colors.textMuted,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 6,
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -60,7 +80,6 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     paddingVertical: 7,
     paddingHorizontal: spacing.md,
-    marginBottom: spacing.sm,
     borderRadius: radius.pill,
     backgroundColor: colors.dangerSoft,
     borderWidth: 1,

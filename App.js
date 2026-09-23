@@ -51,7 +51,9 @@ const RECORD_TAKE_SECONDS = 10;
 
 // Whisper punctuates every take, so "ends in a period" says nothing about whether the
 // speaker finished a thought. These bounds decide when a window is worth analysing.
-const MIN_ANALYSIS_CHARS = 80;
+// Keep the floor low: real spoken claims are short ("La salvación es por obras" is 26
+// characters), and anything higher silently discards them.
+const MIN_ANALYSIS_CHARS = 18;
 const HARD_CAP_CHARS = 1200;
 const SILENT_TAKES_TO_FLUSH = 2;
 
@@ -96,6 +98,7 @@ function AppContent() {
   const [editingMessage, setEditingMessage] = useState(null);
   const [analysisMode, setAnalysisMode] = useState('live');
   const [autoSpeak, setAutoSpeak] = useState('never');
+  const [lastHeard, setLastHeard] = useState('');
 
   const autoSpeakRef = useRef('never');
   const headsetRef = useRef(false);
@@ -308,6 +311,10 @@ function AppContent() {
     try {
       const spoken = ((await transcribeAudio(uri)) || '').trim();
 
+      // Always surface what was captured, even if it never becomes a verdict, so it's
+      // obvious the microphone is working.
+      if (spoken.length >= 3) setLastHeard(spoken);
+
       if (analysisModeRef.current === 'onStop') {
         if (spoken.length >= 3) appendTranscript(spoken);
         return;
@@ -326,16 +333,21 @@ function AppContent() {
       const elapsed = (Date.now() - windowStartRef.current) / 1000;
       const windowFull = elapsed >= windowSecondsRef.current;
 
+      // Too little was said to be worth checking. Restart the clock so the next window is
+      // measured from now instead of letting the elapsed time drift forward forever.
+      if (buffered.length < MIN_ANALYSIS_CHARS) {
+        if (windowFull) windowStartRef.current = Date.now();
+        return;
+      }
+
       // The speaker clearly paused: a natural place to cut, even mid-window.
-      const pausedAfterSpeaking =
-        silentTakesRef.current >= SILENT_TAKES_TO_FLUSH && buffered.length >= MIN_ANALYSIS_CHARS;
+      const pausedAfterSpeaking = silentTakesRef.current >= SILENT_TAKES_TO_FLUSH;
 
       // Once the window is up, wait for the current sentence to close — but not forever.
       const readyToCut =
         windowFull && (looksComplete(buffered) || elapsed >= windowSecondsRef.current * 1.5);
 
       if (!readyToCut && !pausedAfterSpeaking && buffered.length < HARD_CAP_CHARS) return;
-      if (buffered.length < MIN_ANALYSIS_CHARS) return;
 
       bufferRef.current = '';
       windowStartRef.current = Date.now();
@@ -424,6 +436,7 @@ function AppContent() {
     bufferRef.current = '';
     windowStartRef.current = Date.now();
     silentTakesRef.current = 0;
+    setLastHeard('');
     listeningRef.current = true;
     setIsListening(true);
     listenLoop();
@@ -627,7 +640,11 @@ function AppContent() {
         ) : null}
 
         {isListening ? (
-          <ListeningIndicator windowSeconds={windowSeconds} analysisMode={analysisMode} />
+          <ListeningIndicator
+            windowSeconds={windowSeconds}
+            analysisMode={analysisMode}
+            lastHeard={lastHeard}
+          />
         ) : null}
 
         <SafeAreaView edges={['bottom']} style={styles.composerSafe}>
